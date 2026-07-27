@@ -1,0 +1,417 @@
+openapi: 3.0.3
+info:
+  title: Books API
+  description: |-
+    Microserviço Gerenciamento de Livros - Desafio VGX.
+
+  contact:
+    email: mario7lagoas@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+
+servers:
+  - url: http://localhost:8080
+    description: URL Local
+
+tags:
+  - name: Autenticação e Criação de Usuario
+    description: Operações de Autenticação , Autorização e Castrado de Usuario
+  - name: Book
+    description: Operações sobre Livros
+
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Autenticação e Criação de Usuario
+      summary: Criando Um Usuario
+      description: Criando Um Usuario na Plataforma
+      operationId: criandoUsuario
+      requestBody:
+        description: Criando novo Usuario
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioApiRequest'
+        required: true
+      responses:
+        '201':
+          description: created successful operation
+        '400':
+          description: bad request operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+        '422':
+          description: unprocessable operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+  /auth/login:
+    post:
+      tags:
+        - Autenticação e Criação de Usuario
+      summary: Autenticar Usuário
+      description: Realiza login do usuário com email e senha, retornando um token de acesso JWT e configurando um cookie com o refresh token.
+      operationId: loginUsuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsuarioAutenticado'
+            example:
+              email: "mario7lagoas@gmail.com"
+              password: "1234"
+      responses:
+        '200':
+          description: Login realizado com sucesso. Retorna o token de acesso e configura o refresh token no cookie.
+        '401':
+          description: Credenciais inválidas.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: "Credenciais inválidas"
+                status: 401
+        '400':
+          description: Requisição malformada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: "Dados de login inválidos"
+                status: 400
+  /auth/login/refresh:
+    post:
+      tags:
+        - Autenticação e Criação de Usuario
+      summary: Renovar Token de Acesso
+      description: Utiliza o refresh token do cookie para gerar um novo token de acesso JWT.
+      operationId: refreshToken
+      responses:
+        '200':
+          description: Token renovado com sucesso.
+        '401':
+          description: Refresh token inválido ou expirado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: "Refresh token inválido"
+                status: 401
+  /books:
+    get:
+      tags:
+        - Book
+      summary: Buscando Lista de Livros Por Filtros
+      description: Buscando Lista de Livros Por Filtros na Plataforma
+      operationId: buscandoListaFiltroLivros
+      parameters:
+        - name: page
+          description: "Numero da pagina atual"
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          description: "Quantidade de registro por pagina"
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: title
+          description: "Titulo do Livro"
+          example: "Dom Quixote"
+          in: query
+          schema:
+            type: string
+            default: ""
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginacaoApiResponse'
+                  - type: object
+                    properties:
+                      books:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/BookApiResponse'
+  /books/create:
+    post:
+      tags:
+        - Book
+      summary: Cadastrando um Livro
+      description: Cadastrando um novo Livro na Plataforma
+      operationId: criandoBook
+      requestBody:
+        description: Cadastrando um novo Livro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookApiRequest'
+        required: true
+      responses:
+        '201':
+          description: created successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponse'
+        '400':
+          description: bad request operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+        '404':
+          description: not found operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+        '422':
+          description: unprocessable operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+  /books/{guid}:
+    get:
+      tags:
+        - Book
+      summary: Buscando Livro Pelo GUID
+      description: Buscando Livro Pelo GUID na Plataforma
+      operationId: buscandoLivroPeloGUID
+      parameters:
+        - name: guid
+          in: path
+          description: Informe o GUID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponse'
+        '404':
+          description: not found operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+    put:
+      tags:
+        - Book
+      summary: Alterando Um Livro
+      description: Alterando Um Livro na Plataforma
+      operationId: alterandoLivro
+      parameters:
+        - name: guid
+          in: path
+          description: Informe o GUID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Alterando um Livro
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookApiRequest'
+        required: true
+      responses:
+        '202':
+          description: accepted successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookApiResponse'
+        '400':
+          description: bad request operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+        '404':
+          description: not found operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+        '422':
+          description: unprocessable operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+    delete:
+      tags:
+        - Book
+      parameters:
+        - name: guid
+          in: path
+          description: Informe o GUID
+          required: true
+          schema:
+            type: string
+      summary: Apagando um Livro
+      description: Apagando um Livro na Plataforma
+      operationId: apagandoLivro
+      responses:
+        '204':
+          description: No Content successful operation
+        '404':
+          description: not found operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorApiResponse'
+components:
+  schemas:
+    UsuarioAutenticado:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email do usuário para login.
+          example: "mario7lagoas@gmail.com"
+        password:
+          type: string
+          format: password
+          description: Senha do usuário.
+          example: "1234"
+      required:
+        - email
+        - password
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Mensagem de erro.
+          example: "Credenciais inválidas"
+        status:
+          type: integer
+          description: Código de status HTTP.
+          example: 401
+      required:
+        - message
+        - status
+    PaginacaoApiResponse:
+      type: object
+      properties:
+        number:
+          type: integer
+          example: 0
+          description: "Pagina atual"
+        totalPages:
+          type: integer
+          example: 1
+          description: "Total de paginas"
+        totalElements:
+          type: integer
+          example: 1
+          description: "Total de Items"
+    ErrorApiResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "XXX HTTP_STATUS_CODE"
+          description: "Status do http response"
+        erros:
+          type: array
+          description: "Lojas associadas a promoção"
+          items:
+            $ref: '#/components/schemas/ErroResponse'
+    ErroResponse:
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: "Alguma operação inválida"
+          description: "Apresenta o motivo da exceção"
+        mensagem:
+          type: string
+          example: "Informa qual campo que está incorreto"
+          description: "Apresenta qual campo do objeto que sofreu a exceção."
+    BookApiResponse:
+      type: object
+      properties:
+        guid:
+          type: string
+          example: "aaaa-bbbb-cccc-dddd-eeeee"
+          description: "Identificador GUID"
+        title:
+          type: string
+          example: "Dom Quixote"
+          description: "Título do Livro"
+        author:
+          type: string
+          example: "Miguel de Cervantes"
+          description: "Autor do livro"
+        description:
+          type: string
+          example: "As aventuras de um homem que acha que é cavaleiro."
+          description: "Descrição do Livro"
+        year:
+          type: number
+          example: 1605
+          description: "Ano do Livro"
+    BookApiRequest:
+      type: object
+      required:
+        - title
+        - author
+      properties:
+        title:
+          type: string
+          example: "Dom Quixote"
+          description: "Título do Livro"
+        author:
+          type: string
+          example: "Miguel de Cervantes"
+          description: "Autor do livro"
+        year:
+          type: number
+          example: 1605
+          description: "Ano do Livro"
+        description:
+          type: string
+          example: "As aventuras de um homem que acha que é cavaleiro."
+          description: "Descrição do Livro"
+    UsuarioApiRequest:
+      required:
+        - userName
+        - email
+        - password
+      type: object
+      properties:
+        userName:
+          type: string
+          description: "Nome do Usuario"
+          example: "Mario Dias"
+        email:
+          type: string
+          description: "E-mail do Usuario"
+          example: "mario7lagoas@gmail.com"
+        password:
+          type: string
+          description: "Senha do Usuario"
+          example: "123456"
