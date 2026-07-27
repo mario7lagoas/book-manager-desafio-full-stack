@@ -1,0 +1,365 @@
+{
+  "info": {
+    "_postman_id": "0a5fcfee-4ae0-4128-a433-82d72b544426",
+    "name": "Desafio VGX - Books API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "1764362"
+  },
+  "item": [
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "Criando um livro",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Dom Quixote\",\r\n  \"author\": \"Miguel de Cervantes\",\r\n  \"year\": 1605,\r\n  \"description\": \"As aventuras de um homem que acha que é cavaleiro.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/books/create",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "books",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar lista de Livros",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "{{TOKEN}}",
+                "value": "{{Bearer}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/books",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "books"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Apagar Livro pelo ID -> GUID",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/books/9f7a8a3c-cec7-401c-8a7c-d2e8150d06d9?{{TOKEN}}={{Bearer}}",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "books",
+                "9f7a8a3c-cec7-401c-8a7c-d2e8150d06d9"
+              ],
+              "query": [
+                {
+                  "key": "{{TOKEN}}",
+                  "value": "{{Bearer}}",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Livro pelo ID -> GUID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "{{TOKEN}}",
+                "value": "{{Bearer}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/books/9f7a8a3c-cec7-401c-8a7c-d2e8150d06d9",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "books",
+                "9f7a8a3c-cec7-401c-8a7c-d2e8150d06d9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar lista de Livros pela Descricao",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "{{TOKEN}}",
+                "value": "{{Bearer}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/books?title=Quixote",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "books"
+              ],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "Quixote"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alterar Livro pelo ID -> GUID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "{{TOKEN}}",
+                "value": "{{Bearer}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Dom Quixote - Ação\",\r\n  \"author\": \"Miguel de Cervantes\",\r\n  \"year\": 1605,\r\n  \"description\": \"As aventuras de um homem que acha que é cavaleiro.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/books/9f7a8a3c-cec7-401c-8a7c-d2e8150d06d9",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "books",
+                "9f7a8a3c-cec7-401c-8a7c-d2e8150d06d9"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Login de Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Salvar Token', ()=> {\r",
+                  "    if (pm.response.to.have.status(200)){\r",
+                  "        pm.globals.set(\"Bearer\", pm.response.headers.get('Authorization'))\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"mario7lagoas@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/auth/login",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userName\": \"Mario Dias\",\r\n  \"email\": \"mario7lagoas@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/auth/register",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Salvar Token', ()=> {\r",
+                  "    if (pm.response.to.have.status(200)){\r",
+                  "        pm.globals.set(\"Bearer\", pm.response.headers.get('Authorization'))\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "{{TOKEN}}",
+                "value": "{{Bearer}}",
+                "type": "text"
+              },
+              {
+                "key": "grant_type",
+                "value": "refresh_token",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{LOCALHOST}}/book-api/v1/auth/login/refresh?grant_type=refresh_token",
+              "host": [
+                "{{LOCALHOST}}"
+              ],
+              "path": [
+                "book-api",
+                "v1",
+                "auth",
+                "login",
+                "refresh"
+              ],
+              "query": [
+                {
+                  "key": "grant_type",
+                  "value": "refresh_token"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "supabase_service_role_api_key_0yh3",
+      "secret": true
+    },
+    {
+      "key": "bearer_token_04hg",
+      "secret": true
+    }
+  ]
+}
