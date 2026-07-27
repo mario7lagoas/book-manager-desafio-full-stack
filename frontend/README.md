@@ -1,89 +1,88 @@
-# 📘 Book Manager — Desafio Técnico Full-Stack
+# Book App
 
-O objetivo do desafio é criar uma aplicação simples para gerenciamento de livros com autenticação JWT e CRUD completo.
+## 1) Visão geral
 
-## Objetivo
-Construir uma aplicação full-stack chamada Book Manager, onde o usuário poderá:
+Este repositório contém uma aplicação web frontend em Angular para gerenciamento de livros. A aplicação possui navegação por rotas, autenticação, componentes de cadastro e pesquisa, além de uma estrutura modular organizada em áreas como segurança, núcleo da aplicação e módulos de livros.
 
-- Criar conta
-- Fazer login
-- Listar livros
-- Criar livros
-- Editar livros
-- Excluir livros
+O projeto está configurado para ser executado localmente com o Angular CLI e usa scripts definidos no arquivo package.json para subir o servidor, gerar build e executar testes.
 
-As páginas internas devem ser protegidas por autenticação.
+## 2) Tecnologias usadas
 
-## Tecnologias Obrigatórias
-- Java + Spring Boot (backend)
-- Livre escolha (frontend)
-- Postgres ou MySQL
-  
-## Requisitos do Backend
+- Angular 14
+- TypeScript 4.7
+- RxJS 7.5
+- PrimeNG, PrimeFlex e PrimeIcons
+- Angular Router e Angular Animations
+- Karma e Jasmine para testes
+- Node.js + npm para execução do ambiente
 
-### Autenticação
-Implementar JWT com os endpoints:
+## 3) Pré-requisitos
 
-- /auth/register — Criar usuário
-- /auth/login — Retornar token JWT
+Antes de iniciar, certifique-se de ter instalado:
 
-Rotas de livros devem exigir autenticação.
+- Node.js 14.15+ (recomendado: 16.x)
+- npm 6+ (recomendado: 8.x)
+- Git
+- Navegador moderno (Chrome, Edge ou similar)
 
-### CRUD de Livros
+## 4) Como instalar dependências
 
-Rota      | Descrição |
------------|------------|
- /books    | Listar livros (com busca opcional por título) |
- /books/create    | Criar livro |
- /books/:id| Buscar por ID |
- /books/:id| Atualizar livro |
- /books/:id| Remover livro |
+Na pasta raiz do projeto, execute:
 
-### Modelo Book
-- title — string, obrigatório
-- author — string, obrigatório
-- year — number, opcional
-- description — string, opcional
-
-### Banco
-- Usar Postgres ou MySQL
-- A estrutura do banco deve estar versionada no repositório:
-  - Um arquivo SQL com a criação das tabelas (ex: `schema.sql`)
-
-## Requisitos do Frontend
-
-Criar interface contendo:
-
-### Páginas obrigatórias
-- /login
-- /books — listagem
-- /books/new — criação
-- /books/[id]/edit — edição
-
-### Funcionalidades
-- Autenticação e armazenamento do token
-- Proteção das páginas internas
-- Formulários funcionais
-- Busca de livros por título
-
-## O que será avaliado
-- Funcionamento do CRUD e autenticação
-- Organização e clareza do código
-- Boas práticas
-- Uso correto das tecnologias solicitadas
-- Estrutura de pastas backend/frontend
-
-### Diferenciais
-- Dockerização do frontend e/ou backend
-- Deploy funcional da aplicação (com link)
-- Paginação no endpoint de listagem de livros
-- Documentação da API via Swagger/OpenAPI
-  
-
+```bash
+npm install
 ```
 
-## Entrega
-Enviar o link do repositório contendo:
+Esse comando instala todas as dependências listadas no arquivo package.json.
 
-- Código do frontend e backend
-- README com instruções de execução
+## 5) Passo a passo exato de execução no terminal
+
+1. Abra o terminal na pasta do projeto:
+
+```bash
+cd book-app
+```
+
+2. Instale as dependências:
+
+```bash
+npm install
+```
+
+3. Inicie a aplicação em modo de desenvolvimento:
+
+```bash
+npm start
+```
+
+O comando acima executa o script definido em package.json:
+
+```bash
+ng serve
+```
+
+A aplicação ficará disponível em:
+
+```text
+http://localhost:4200/
+```
+
+4. Para parar a execução, pressione:
+
+```text
+Ctrl + C
+```
+
+### Outras operações úteis
+
+Gerar build de produção:
+
+```bash
+npm run build
+```
+
+Se quiser, também é possível usar o Angular CLI diretamente:
+
+```bash
+npx ng serve
+```
