@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:8.0.31
+    volumes:
+      - dbbase:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: bookdb
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8000:80
+
+  app:
+    build: .
+    container_name: spring_app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  dbbase:
+

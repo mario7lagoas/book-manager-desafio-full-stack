@@ -13,7 +13,13 @@
           "name": "Criando um livro",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              {
+                "key": "{{TOKEN}}",
+                "value": "{{Bearer}}",
+                "type": "text"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"title\": \"Dom Quixote\",\r\n  \"author\": \"Miguel de Cervantes\",\r\n  \"year\": 1605,\r\n  \"description\": \"As aventuras de um homem que acha que é cavaleiro.\"\r\n}",
@@ -24,7 +30,7 @@
               }
             },
             "url": {
-              "raw": "{{LOCALHOST}}/book-api/v1/books/create",
+              "raw": "{{LOCALHOST}}/book-api/v1/books/create?=",
               "host": [
                 "{{LOCALHOST}}"
               ],
@@ -33,6 +39,12 @@
                 "v1",
                 "books",
                 "create"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": ""
+                }
               ]
             }
           },
@@ -214,7 +226,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\" : \"mario7lagoas@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+              "raw": "{\r\n    \"email\" : \"mario7lagoas@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -259,7 +271,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"userName\": \"Mario Dias\",\r\n  \"email\": \"mario7lagoas@gmail.com\",\r\n  \"password\": \"123456\"\r\n}",
+              "raw": "{\r\n  \"userName\": \"Mario Dias\",\r\n  \"email\": \"mario7lagoas@gmail.com\",\r\n  \"password\": \"1234\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"

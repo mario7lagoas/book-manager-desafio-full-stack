@@ -38,7 +38,7 @@ cd backend\books
 
 2) (Opcional) Subir um MySQL local com Docker (exemplo):
 
-docker run --name bookdb -e MYSQL_ROOT_PASSWORD=0381 -e MYSQL_DATABASE=bookdb -p 3306:3306 -d mysql:8.0
+docker run --name bookdb -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=bookdb -p 3306:3306 -d mysql:8.0
 
 3) (Opcional) Exportar variáveis de ambiente (PowerShell) para alterar conexão com o banco:
 
@@ -46,7 +46,7 @@ $env:DB_HOST = "localhost"
 $env:DB_PORT = "3306"
 $env:DB_NAME = "bookdb"
 $env:DB_USER = "root"
-$env:DB_PASSWORD = "0381"
+$env:DB_PASSWORD = "1234"
 
 OBS: Valores acima coincidem com os defaults em `src/main/resources/application.yml` (password padrão `0381`).
 
