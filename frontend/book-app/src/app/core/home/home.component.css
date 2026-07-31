@@ -1,0 +1,18 @@
+
+.home-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+.logo {
+  float: right;
+  /*width: calc(20% - 50px);*/
+  margin-top: 5%;
+  width: calc(70% - 10px - 30px);
+
+
+}

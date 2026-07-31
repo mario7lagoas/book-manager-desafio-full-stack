@@ -1,0 +1,44 @@
+<div class="container">
+  <form autocomplete="off"  #usuarioForm="ngForm" (ngSubmit)="salvar(usuarioForm)">
+    <div class="grid">
+      <div class="col-12">
+        <h1>Novo Usuário</h1>
+      </div>
+
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Nome</label>
+        <input  pInputText type="text" name="userName" [(ngModel)]="usuario.userName" #userName="ngModel" required minlength="3">
+        <p-message *ngIf="userName.hasError('required') && userName.dirty" severity="error"
+        text="Informe o nome do usuario."></p-message>
+
+        <p-message *ngIf="userName.hasError('minlength') && userName.dirty" severity="error"
+        text="Mínimo de {{ userName.errors?.['minlength'].requiredLength }} caracteres."></p-message>
+      </div>
+
+      <div class="col-12 md:col-4 p-fluid">
+        <label>E-mail</label>
+        <input pInputText type="text" name="email" [(ngModel)]="usuario.email" #email="ngModel" required email>
+
+        <p-message *ngIf="email.invalid && email.dirty" severity="error"
+        text="E-mail inválido."></p-message>
+      </div>
+
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Senha</label>
+        <p-password name="password" [(ngModel)]="usuario.password" #password="ngModel" minlength="4"></p-password>
+        <p-message *ngIf="password.hasError('required') && password.dirty" severity="error"
+        text="Informe a senha do usuario."></p-message>
+
+        <p-message *ngIf="password.hasError('minlength') && password.dirty" severity="error"
+        text="Mínimo de {{ password.errors?.['minlength'].requiredLength }} caracteres."></p-message>
+      </div>
+
+      <div class="col-12">
+        <button pButton type="submit" label="Salvar"
+         [disabled]="!usuarioForm.valid"></button>
+        <a routerLink="/login">Voltar para o login</a>
+      </div>
+    </div>
+  </form>
+</div>
+

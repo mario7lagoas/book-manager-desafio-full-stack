@@ -1,0 +1,21 @@
+<nav class="navbar">
+
+  <div class="container">
+    <div class="grid">
+      <div class="col-12 ">
+        {{ empresa }}
+        <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu"><i class="pi pi-bars"></i></a>
+
+      </div>
+
+    </div>
+  </div>
+
+  <ul class="navbar-menu" [hidden]="!exibindoMenu">
+    <li class="navbar-usuario">{{ usuarioLogado }}</li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="exibindoMenu = !exibindoMenu"><a routerLink="/home" >Home</a></li>
+    <li class="navbar-menuitem" routerLinkActive="ativo"
+    (click)="exibindoMenu = !exibindoMenu"><a routerLink="/book" >Livros</a></li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" (click)="exibindoMenu = !exibindoMenu"><a routerLink="/login" (click)="logout()">Logout</a></li>
+  </ul>
+</nav>

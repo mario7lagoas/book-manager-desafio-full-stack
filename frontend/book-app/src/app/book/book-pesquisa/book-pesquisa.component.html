@@ -1,0 +1,77 @@
+<div class="container">
+  <form autocomplete="off" *ngIf="temPermissao('ROLE_BUSCAR_BOOK')" (ngSubmit)="bookFiltro()">
+      <div class="grid">
+
+        <div class="col-12">
+          <h1>Livros</h1>
+        </div>
+
+        <div class="col-12 md:col-4 p-fluid">
+          <label>Titulo</label>
+          <input pInputText type="text" name="title" [(ngModel)]="filtro.title">
+        </div>
+
+        <div class="col-12">
+          <button pButton type="submit" label="Pesquisar"></button>
+        </div>
+      </div>
+  </form>
+  <p-divider></p-divider>
+
+  <div class="grid">
+    <div class="col-12">
+      <p-table [value]="books" styleClass="p-datatable-gridlines p-datatable-sm p-datatable-striped" dataKey="guid" [paginator]="true"
+      [responsive]="true" [rows]="filtro.itensPorPagina" [lazy]="true" [loading]="loading" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Titulo</th>
+            <th class="col-data-header">Autor</th>
+            <th>Descrição</th>
+
+
+            <th class="col-acoes">Ano</th>
+            <th class="col-acoes">Opções</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-book let-expanded="expanded">
+          <tr>
+            <td>
+              <span class="p-column-title">Titulo</span>
+              {{ book.title }}
+            </td>
+            <td class="col-tipo">
+              <span class="p-column-title">Autor</span>
+              {{ book.author }}
+            </td>
+            <td>
+              <span class="p-column-title">Titulo</span>
+              {{ book.description }}
+            </td>
+
+            <td class="col-acoes">
+              <span class="p-column-title">Ano</span>
+              {{ book.year }}
+            <td class="col-acoes-print">
+              <a pButton icon="pi pi-pencil" class="p-button-rounded p-button-warning" pTooltip="Editar" tooltipPosition="top"
+              *ngIf="temPermissao('ROLE_ALTERAR_BOOK')" [routerLink]="['/book', book.guid]"></a>
+              <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" pTooltip="Excluir" tooltipPosition="top"
+              *ngIf="temPermissao('ROLE_APAGAR_BOOK')"  (click)="confirmarExclusao(book)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              Nenhuma Promocão encontrada.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <a pButton label="Novo Livro" routerLink="/book/novo" *ngIf="temPermissao('ROLE_CADASTRAR_BOOK')"></a>
+
+</div>
+

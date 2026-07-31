@@ -1,0 +1,53 @@
+<div class="container">
+  <form autocomplete="off" #livroForm="ngForm" *ngIf="temPermissao('ROLE_CADASTRAR_BOOK')" (ngSubmit)="salvar(livroForm)">
+    <div class="grid">
+      <div class="col-12">
+        <h1>{{ editando ? 'Edição de' : 'Nova' }} Livro</h1>
+      </div>
+
+      <div class="col-12 md:col-6 p-fluid">
+        <label>Titulo</label>
+        <input pInputText type="text" name="title" [(ngModel)]="livro.title" #title="ngModel" required minlength="3">
+
+        <p-message *ngIf="title.hasError('required') && title.dirty" severity="error"
+        text="Informe um título para o livro"></p-message>
+
+        <p-message *ngIf="title.hasError('minlength') && title.dirty" severity="error"
+        text="Mínimo de {{ title.errors?.['minlength'].requiredLength }} caracteres."></p-message>
+
+      </div>
+
+      <div class="col-12 md:col-3 p-fluid">
+        <label>Autor</label>
+        <input pInputText type="text" name="author" [(ngModel)]="livro.author" #author="ngModel" required minlength="1">
+
+        <p-message *ngIf="author.hasError('required') && author.dirty" severity="error"
+        text="Informe o autor do livro"></p-message>
+
+        <p-message *ngIf="author.hasError('minlength') && author.dirty" severity="error"
+        text="Mínimo de {{ author.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{ author.errors?.['minlength'].actualLength }}"></p-message>
+
+      </div>
+
+      <div class="col-12 md:col-6 p-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text" name="description" [(ngModel)]="livro.description" #description="ngModel">
+
+      </div>
+
+      <div class="col-12 md:col-2 p-fluid">
+        <label>Ano</label>
+        <p-inputNumber [(ngModel)]="livro.year" #year="ngModel" name="year" [min]="1" [max]="9999" [useGrouping]="false" [maxlength]="4">
+        </p-inputNumber>
+      </div>
+      <div class="col-12">
+        <button pButton type="submit" label="Salvar"
+        *ngIf="temPermissao('ROLE_CADASTRAR_BOOK')" [disabled]="!livroForm.valid"></button>
+        <button pButton type="button" label="Novo" class="p-button-info"
+        *ngIf="temPermissao('ROLE_CADASTRAR_BOOK')" (click)="novo(livroForm)"></button>
+        <a routerLink="/book">Voltar para a pesquisa</a>
+      </div>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,46 @@
+<div class="container surface-card p-4 shadow-2 border-round w-full lg:w-6"
+style="max-width: 600px; margin: auto; margin-top: 10%;">
+  <form autocomplete="off" #f="ngForm">
+    <div class="grid">
+
+      <div class="col-12 p-fluid ">
+        <div class="text-900 text-3xl font-medium mb-3 text-center mb-5">Gerenciador de Livros - VGX</div>
+        <h1>Login</h1>
+      </div>
+
+
+      <div class="col-12 p-fluid">
+        <label >E-mail</label>
+        <span class="p-input-icon-left">
+            <i class="pi pi-at"></i>
+            <input pInputText type="email" name="email" placeholder="Informe seu e-mail" ngModel #email="ngModel" required email>
+        </span>
+
+        <p-message *ngIf="email.invalid && email.dirty" severity="error"
+        text="E-mail inválido."></p-message>
+      </div>
+
+      <div class="col-12 p-fluid">
+        <label >Senha</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-lock"></i>
+          <input pInputText type="password" name="password" placeholder="Informe sua senha" ngModel #password="ngModel" required minlength="4">
+        </span>
+
+        <p-message *ngIf="password.hasError('required') && password.dirty" severity="error"
+        text="Informe sua senha"></p-message>
+        <p-message *ngIf="password.hasError('minlength') && password.dirty" severity="error"
+        text="Mínimo de {{ password.errors?.['minlength'].requiredLength }} caracteres. Você digitou apenas {{ password.errors?.['minlength'].actualLength }}"></p-message>
+      </div>
+
+      <div class="col-12 p-fluid" >
+        <button pButton type="submit" label="Login" [disabled]="f.invalid" icon="pi pi-user" class="w-full"
+            (click)="login(email.value, password.value)"></button>
+      </div>
+      <div class="col-12 p-fluid" >
+        <a routerLink="/login/create" class="w-full">Não possui cadastro? Clique aqui</a>
+      </div>
+    </div>
+  </form>
+</div>
+
