@@ -35,7 +35,68 @@ npm install
 
 Esse comando instala todas as dependências listadas no arquivo package.json.
 
-## 5) Passo a passo exato de execução no terminal
+## 5) Executando com Docker
+
+Se preferir rodar a aplicação em containers, siga os passos abaixo.
+
+### Pré-requisitos
+
+- Docker instalado e em execução no seu computador
+- Docker Compose disponível
+
+### Passo a passo
+
+1. Abra o terminal na pasta do projeto:
+
+```bash
+cd book-app
+```
+
+2. Construa e suba os containers:
+
+```bash
+docker compose up --build
+```
+
+> Se o seu ambiente usar a versão antiga do Docker Compose, o comando pode ser:
+>
+> ```bash
+> docker-compose up --build
+> ```
+
+3. Aguarde a inicialização da aplicação. Ela ficará disponível em:
+
+```text
+http://localhost:4200/
+```
+
+4. Para parar a execução, pressione:
+
+```text
+Ctrl + C
+```
+
+Ou, em outra sessão do terminal, execute:
+
+```bash
+docker compose down
+```
+
+### Comandos úteis
+
+Reiniciar os containers sem reconstruir:
+
+```bash
+docker compose up
+```
+
+Reconstruir após alterações no Dockerfile ou nas dependências:
+
+```bash
+docker compose up --build
+```
+
+## 6) Passo a passo exato de execução no terminal
 
 1. Abra o terminal na pasta do projeto:
 

@@ -1,0 +1,15 @@
+node_modules
+npm-debug.log
+dist
+.git
+.gitignore
+.angular
+.vscode
+.vs
+*.md
+.env
+.env.local
+karma.conf.js
+tsconfig.spec.json
+src/test.ts
+**/*.spec.ts

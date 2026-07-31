@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  book-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: book-app
+    ports:
+      - "4200:4200"
+    environment:
+      - NODE_ENV=production
